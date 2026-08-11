@@ -1,0 +1,168 @@
+// ============================================================
+// ESTRUCTURAS DE DATOS DETALLADAS
+// ============================================================
+
+// ============================================================
+// 1. ESTRUCTURA: ESTUDIANTE
+// ============================================================
+// Propósito: Almacenar la información personal y académica
+// de cada estudiante registrado en el sistema.
+//
+// Campos:
+// - cedula: Identificador único del estudiante
+// - nombre: Nombre completo del estudiante
+// - edad: Edad del estudiante
+// - carrera: Carrera que está cursando
+//
+// Validaciones:
+// - Cedula debe ser única
+// - Edad debe ser un número positivo
+// - Carrera no debe estar vacía
+
+Estructura Estudiante
+    cedula: Cadena    // Ejemplo: "1234567890"
+    nombre: Cadena     // Ejemplo: "Juan Pérez"
+    edad: Entero       // Ejemplo: 20
+    carrera: Cadena    // Ejemplo: "Ingeniería en Sistemas"
+Fin Estructura
+
+// ============================================================
+// 2. ESTRUCTURA: NOTAS
+// ============================================================
+// Propósito: Almacenar las calificaciones de un estudiante
+// en una asignatura específica.
+//
+// Campos:
+// - cedula: Identificador del estudiante
+// - asignatura: Nombre de la materia
+// - parcial1: Nota del primer parcial (0-20)
+// - parcial2: Nota del segundo parcial (0-20)
+// - examen: Nota del examen final (0-20)
+//
+// Validaciones:
+// - Todas las notas deben estar entre 0 y 20
+// - La cédula debe existir en la lista de estudiantes
+
+Estructura Notas
+    cedula: Cadena      // Ejemplo: "1234567890"
+    asignatura: Cadena  // Ejemplo: "Matemáticas"
+    parcial1: Real      // Ejemplo: 15.5
+    parcial2: Real      // Ejemplo: 16.0
+    examen: Real        // Ejemplo: 14.5
+Fin Estructura
+
+// ============================================================
+// 3. ESTRUCTURA: REPORTE
+// ============================================================
+// Propósito: Almacenar información resumida para reportes.
+//
+// Campos:
+// - totalEstudiantes: Cantidad total de estudiantes
+// - aprobados: Cantidad de estudiantes aprobados
+// - suspensos: Cantidad de estudiantes en suspenso
+// - reprobados: Cantidad de estudiantes reprobados
+// - promedioGeneral: Promedio de todos los estudiantes
+// - mejorPromedio: Mejor promedio registrado
+// - peorPromedio: Peor promedio registrado
+
+Estructura Reporte
+    totalEstudiantes: Entero
+    aprobados: Entero
+    suspensos: Entero
+    reprobados: Entero
+    promedioGeneral: Real
+    mejorPromedio: Real
+    peorPromedio: Real
+    estudiantes: Arreglo de EstudianteReporte
+Fin Estructura
+
+// ============================================================
+// 4. ESTRUCTURA: ESTUDIANTE REPORTE
+// ============================================================
+// Propósito: Almacenar información de estudiantes para reportes.
+//
+// Campos:
+// - nombre: Nombre del estudiante
+// - promedio: Promedio general del estudiante
+// - estado: Estado académico del estudiante
+
+Estructura EstudianteReporte
+    nombre: Cadena
+    promedio: Real
+    estado: Cadena  // "Aprobado", "Suspenso", "Reprobado"
+Fin Estructura
+
+// ============================================================
+// 5. ESTRUCTURA: ESTADÍSTICAS ASIGNATURA
+// ============================================================
+// Propósito: Almacenar estadísticas por asignatura.
+//
+// Campos:
+// - asignatura: Nombre de la asignatura
+// - cantidadEstudiantes: Número de estudiantes en la asignatura
+// - promedioGeneral: Promedio de todos los estudiantes en esta asignatura
+// - notaMaxima: Nota más alta obtenida
+// - notaMinima: Nota más baja obtenida
+
+Estructura EstadisticasAsignatura
+    asignatura: Cadena
+    cantidadEstudiantes: Entero
+    promedioGeneral: Real
+    notaMaxima: Real
+    notaMinima: Real
+Fin Estructura
+
+// ============================================================
+// 6. ESTRUCTURA: CONFIGURACIÓN DEL SISTEMA
+// ============================================================
+// Propósito: Almacenar parámetros de configuración del sistema.
+//
+// Campos:
+// - notaMinima: Nota mínima permitida
+// - notaMaxima: Nota máxima permitida
+// - notaAprobacion: Nota mínima para aprobar
+// - pesoParcial1: Peso del primer parcial
+// - pesoParcial2: Peso del segundo parcial
+// - pesoExamen: Peso del examen final
+
+Estructura Configuracion
+    notaMinima: Real = 0
+    notaMaxima: Real = 20
+    notaAprobacion: Real = 14
+    pesoParcial1: Real = 0.3
+    pesoParcial2: Real = 0.3
+    pesoExamen: Real = 0.4
+    maxCaracteresNombre: Entero = 100
+    maxCaracteresCarrera: Entero = 50
+Fin Estructura
+
+// ============================================================
+// EJEMPLO DE USO DE LAS ESTRUCTURAS
+// ============================================================
+
+// Ejemplo 1: Crear un estudiante
+estudiante1.cedula = "1234567890"
+estudiante1.nombre = "María González"
+estudiante1.edad = 21
+estudiante1.carrera = "Ingeniería en Sistemas"
+
+// Ejemplo 2: Crear notas para el estudiante
+notas1.cedula = "1234567890"
+notas1.asignatura = "Programación"
+notas1.parcial1 = 16.5
+notas1.parcial2 = 15.0
+notas1.examen = 17.5
+
+// Ejemplo 3: Calcular promedio de las notas
+promedio = (notas1.parcial1 * 0.3) + (notas1.parcial2 * 0.3) + (notas1.examen * 0.4)
+// Resultado: 16.35
+
+// Ejemplo 4: Determinar estado del estudiante
+Si promedio >= 14 Entonces
+    estado = "Aprobado"
+Sino Si promedio >= 10 Entonces
+    estado = "Suspenso"
+Sino
+    estado = "Reprobado"
+Fin Si
+// Resultado: "Aprobado"

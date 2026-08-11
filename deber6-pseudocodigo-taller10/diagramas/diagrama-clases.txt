@@ -1,0 +1,111 @@
+// ============================================================
+// DIAGRAMA DE CLASES DEL SISTEMA
+// ============================================================
+
++----------------------------------------------------------+
+|                    CLASE: Estudiante                      |
++----------------------------------------------------------+
+| - cedula: String                                          |
+| - nombre: String                                          |
+| - edad: Integer                                           |
+| - carrera: String                                         |
++----------------------------------------------------------+
+| + getCedula(): String                                     |
+| + setCedula(cedula: String): void                         |
+| + getNombre(): String                                     |
+| + setNombre(nombre: String): void                         |
+| + getEdad(): Integer                                      |
+| + setEdad(edad: Integer): void                           |
+| + getCarrera(): String                                    |
+| + setCarrera(carrera: String): void                      |
++----------------------------------------------------------+
+
++----------------------------------------------------------+
+|                    CLASE: Notas                           |
++----------------------------------------------------------+
+| - cedula: String                                          |
+| - asignatura: String                                      |
+| - parcial1: Double                                        |
+| - parcial2: Double                                        |
+| - examen: Double                                          |
++----------------------------------------------------------+
+| + getCedula(): String                                     |
+| + setCedula(cedula: String): void                         |
+| + getAsignatura(): String                                 |
+| + setAsignatura(asignatura: String): void                |
+| + getParcial1(): Double                                   |
+| + setParcial1(parcial1: Double): void                    |
+| + getParcial2(): Double                                   |
+| + setParcial2(parcial2: Double): void                    |
+| + getExamen(): Double                                     |
+| + setExamen(examen: Double): void                        |
+| + calcularPromedio(): Double                             |
++----------------------------------------------------------+
+
++----------------------------------------------------------+
+|                  CLASE: GestionEstudiantes                |
++----------------------------------------------------------+
+| - estudiantes: List<Estudiante>                           |
++----------------------------------------------------------+
+| + agregarEstudiante(estudiante: Estudiante): Boolean     |
+| + buscarEstudiante(cedula: String): Estudiante           |
+| + verificarExistencia(cedula: String): Boolean           |
+| + listarEstudiantes(): List<Estudiante>                  |
+| + eliminarEstudiante(cedula: String): Boolean            |
++----------------------------------------------------------+
+
++----------------------------------------------------------+
+|                   CLASE: GestionNotas                    |
++----------------------------------------------------------+
+| - notas: List<Notas>                                      |
++----------------------------------------------------------+
+| + agregarNotas(notas: Notas): Boolean                    |
+| + consultarNotas(cedula: String): List<Notas>            |
+| + calcularPromedioGeneral(cedula: String): Double        |
+| + obtenerMejoresPromedios(n: Integer): List<Map>         |
++----------------------------------------------------------+
+
++----------------------------------------------------------+
+|                   CLASE: Taller10                        |
++----------------------------------------------------------+
+| - gestionEstudiantes: GestionEstudiantes                  |
+| - gestionNotas: GestionNotas                             |
+| - ejecutar: Boolean                                       |
++----------------------------------------------------------+
+| + ejecutarPrograma(): void                                |
+| + registrarEstudiante(): void                             |
+| + consultarEstudiante(): void                             |
+| + listarEstudiantes(): void                              |
+| + registrarNotas(): void                                  |
+| + consultarNotas(): void                                  |
+| + calcularPromedios(): void                               |
+| + generarReporte(): void                                  |
+| + calcularPromedioNota(notas: Notas): Double             |
+| + determinarEstado(promedio: Double): String             |
++----------------------------------------------------------+
+
++----------------------------------------------------------+
+|                   CLASE: Utils                           |
++----------------------------------------------------------+
+| - NO_APROBADO: double = 10.0                             |
+| - APROBADO: double = 14.0                                |
++----------------------------------------------------------+
+| + limpiarPantalla(): void                                 |
+| + mostrarMenu(): void                                     |
+| + validarOpcion(opcion: String): Integer                 |
+| + validarCedula(cedula: String): Boolean                |
+| + validarNota(nota: Double): Boolean                    |
++----------------------------------------------------------+
+
++----------------------------------------------------------+
+|               CLASE: Configuracion                       |
++----------------------------------------------------------+
+| - NOTA_MINIMA: double = 0.0                               |
+| - NOTA_MAXIMA: double = 20.0                              |
+| - NOTA_APROBACION: double = 14.0                         |
+| - PESO_PARCIAL1: double = 0.3                            |
+| - PESO_PARCIAL2: double = 0.3                            |
+| - PESO_EXAMEN: double = 0.4                              |
++----------------------------------------------------------+
+| + obtenerEstado(promedio: double): String                |
++----------------------------------------------------------+

@@ -1,0 +1,483 @@
+// ============================================================
+// TALLER 10 - SISTEMA DE GESTIÓN ACADÉMICA
+// DESARROLLADO POR: [Nombre del Estudiante]
+// FECHA: [Fecha actual]
+// ============================================================
+
+// ============================================================
+// DEFINICIÓN DE ESTRUCTURAS DE DATOS
+// ============================================================
+
+// Estructura para almacenar información de estudiantes
+Estructura Estudiante
+    Definir cedula Como Cadena
+    Definir nombre Como Cadena
+    Definir edad Como Entero
+    Definir carrera Como Cadena
+Fin Estructura
+
+// Estructura para almacenar notas de estudiantes
+Estructura Notas
+    Definir cedula Como Cadena
+    Definir asignatura Como Cadena
+    Definir parcial1 Como Real
+    Definir parcial2 Como Real
+    Definir examen Como Real
+Fin Estructura
+
+// ============================================================
+// VARIABLES GLOBALES
+// ============================================================
+
+// Listas para almacenar datos
+Definir listaEstudiantes Como Arreglo de Estudiante
+Definir listaNotas Como Arreglo de Notas
+Definir opcion Como Entero
+Definir continuar Como Lógico
+
+// ============================================================
+// MÓDULO PRINCIPAL - PROGRAMA
+// ============================================================
+
+Algoritmo Taller10
+    // Inicializar variables
+    continuar = Verdadero
+    listaEstudiantes = []
+    listaNotas = []
+    
+    Mientras continuar Hacer
+        // Limpiar pantalla
+        LimpiarPantalla()
+        
+        Escribir "================================================"
+        Escribir "   SISTEMA DE GESTIÓN ACADÉMICA - TALLER 10"
+        Escribir "================================================"
+        Escribir ""
+        Escribir "1. Registrar estudiante"
+        Escribir "2. Consultar estudiante"
+        Escribir "3. Listar estudiantes"
+        Escribir "4. Registrar notas"
+        Escribir "5. Consultar notas"
+        Escribir "6. Calcular promedios"
+        Escribir "7. Generar reporte"
+        Escribir "8. Salir"
+        Escribir ""
+        Escribir "Seleccione una opción: "
+        Leer opcion
+        
+        Segun opcion Hacer
+            Caso 1:
+                RegistrarEstudiante()
+            Caso 2:
+                ConsultarEstudiante()
+            Caso 3:
+                ListarEstudiantes()
+            Caso 4:
+                RegistrarNotas()
+            Caso 5:
+                ConsultarNotas()
+            Caso 6:
+                CalcularPromedios()
+            Caso 7:
+                GenerarReporte()
+            Caso 8:
+                continuar = Falso
+                Escribir "¡Gracias por usar el sistema!"
+            De Otro Modo:
+                Escribir "Opción inválida. Intente de nuevo."
+        Fin Segun
+        
+        Si continuar Entonces
+            Escribir "Presione Enter para continuar..."
+            Leer variableEspera
+        Fin Si
+    Fin Mientras
+Fin Algoritmo
+
+// ============================================================
+// SUBALGORITMOS PARA GESTIÓN DE ESTUDIANTES
+// ============================================================
+
+// ------------------ Registrar Estudiante --------------------
+SubAlgoritmo RegistrarEstudiante()
+    Definir estudiante Como Estudiante
+    Definir existe Como Lógico
+    
+    Escribir ""
+    Escribir "================================================"
+    Escribir "   REGISTRO DE NUEVO ESTUDIANTE"
+    Escribir "================================================"
+    Escribir ""
+    
+    Escribir "Ingrese la cédula del estudiante: "
+    Leer estudiante.cedula
+    
+    // Validar que no exista otro estudiante con la misma cédula
+    existe = BuscarEstudiante(estudiante.cedula)
+    
+    Si existe Entonces
+        Escribir "¡Error! Ya existe un estudiante con esa cédula."
+    Sino
+        Escribir "Ingrese el nombre completo: "
+        Leer estudiante.nombre
+        Escribir "Ingrese la edad: "
+        Leer estudiante.edad
+        Escribir "Ingrese la carrera: "
+        Leer estudiante.carrera
+        
+        // Agregar a la lista
+        Agregar estudiante a listaEstudiantes
+        Escribir "✅ Estudiante registrado exitosamente!"
+    Fin Si
+Fin SubAlgoritmo
+
+// ------------------ Consultar Estudiante --------------------
+SubAlgoritmo ConsultarEstudiante()
+    Definir cedula Como Cadena
+    Definir estudiante Como Estudiante
+    
+    Escribir ""
+    Escribir "================================================"
+    Escribir "   CONSULTA DE ESTUDIANTE"
+    Escribir "================================================"
+    Escribir ""
+    
+    Escribir "Ingrese la cédula del estudiante: "
+    Leer cedula
+    
+    estudiante = ObtenerEstudiante(cedula)
+    
+    Si estudiante <> Nulo Entonces
+        Escribir ""
+        Escribir "📋 INFORMACIÓN DEL ESTUDIANTE:"
+        Escribir "Cédula: ", estudiante.cedula
+        Escribir "Nombre: ", estudiante.nombre
+        Escribir "Edad: ", estudiante.edad
+        Escribir "Carrera: ", estudiante.carrera
+    Sino
+        Escribir "❌ Estudiante no encontrado."
+    Fin Si
+Fin SubAlgoritmo
+
+// ------------------ Listar Estudiantes --------------------
+SubAlgoritmo ListarEstudiantes()
+    Definir i Como Entero
+    
+    Escribir ""
+    Escribir "================================================"
+    Escribir "   LISTADO DE ESTUDIANTES"
+    Escribir "================================================"
+    Escribir ""
+    
+    Si Longitud(listaEstudiantes) = 0 Entonces
+        Escribir "No hay estudiantes registrados."
+    Sino
+        Escribir "Cédula     | Nombre                | Edad | Carrera"
+        Escribir "----------------------------------------------------"
+        
+        Para i = 0 Hasta Longitud(listaEstudiantes) - 1 Hacer
+            Escribir listaEstudiantes[i].cedula, " | ", 
+                     listaEstudiantes[i].nombre, " | ", 
+                     listaEstudiantes[i].edad, " | ", 
+                     listaEstudiantes[i].carrera
+        Fin Para
+    Fin Si
+Fin SubAlgoritmo
+
+// ============================================================
+// FUNCIONES AUXILIARES PARA ESTUDIANTES
+// ============================================================
+
+// ------------------ Buscar Estudiante --------------------
+Función BuscarEstudiante(cedula) Retorna Lógico
+    Definir i Como Entero
+    Definir encontrado Como Lógico
+    encontrado = Falso
+    
+    Para i = 0 Hasta Longitud(listaEstudiantes) - 1 Hacer
+        Si listaEstudiantes[i].cedula = cedula Entonces
+            encontrado = Verdadero
+            i = Longitud(listaEstudiantes)  // Salir del bucle
+        Fin Si
+    Fin Para
+    
+    Retornar encontrado
+Fin Función
+
+// ------------------ Obtener Estudiante --------------------
+Función ObtenerEstudiante(cedula) Retorna Estudiante
+    Definir i Como Entero
+    Definir estudiante Como Estudiante
+    estudiante = Nulo
+    
+    Para i = 0 Hasta Longitud(listaEstudiantes) - 1 Hacer
+        Si listaEstudiantes[i].cedula = cedula Entonces
+            estudiante = listaEstudiantes[i]
+            i = Longitud(listaEstudiantes)  // Salir del bucle
+        Fin Si
+    Fin Para
+    
+    Retornar estudiante
+Fin Función
+
+// ============================================================
+// SUBALGORITMOS PARA GESTIÓN DE NOTAS
+// ============================================================
+
+// ------------------ Registrar Notas --------------------
+SubAlgoritmo RegistrarNotas()
+    Definir notas Como Notas
+    Definir existe Como Lógico
+    
+    Escribir ""
+    Escribir "================================================"
+    Escribir "   REGISTRO DE NOTAS"
+    Escribir "================================================"
+    Escribir ""
+    
+    Escribir "Ingrese la cédula del estudiante: "
+    Leer notas.cedula
+    
+    existe = BuscarEstudiante(notas.cedula)
+    
+    Si No existe Entonces
+        Escribir "❌ Estudiante no encontrado."
+    Sino
+        Escribir "Ingrese el nombre de la asignatura: "
+        Leer notas.asignatura
+        
+        Escribir "Ingrese la nota del primer parcial (0-20): "
+        Leer notas.parcial1
+        Escribir "Ingrese la nota del segundo parcial (0-20): "
+        Leer notas.parcial2
+        Escribir "Ingrese la nota del examen final (0-20): "
+        Leer notas.examen
+        
+        Si (notas.parcial1 >= 0 Y notas.parcial1 <= 20) Y
+           (notas.parcial2 >= 0 Y notas.parcial2 <= 20) Y
+           (notas.examen >= 0 Y notas.examen <= 20) Entonces
+            Agregar notas a listaNotas
+            Escribir "✅ Notas registradas exitosamente!"
+        Sino
+            Escribir "❌ Error: Las notas deben estar entre 0 y 20."
+        Fin Si
+    Fin Si
+Fin SubAlgoritmo
+
+// ------------------ Consultar Notas --------------------
+SubAlgoritmo ConsultarNotas()
+    Definir cedula Como Cadena
+    Definir estudiante Como Estudiante
+    Definir notasEncontradas Como Arreglo de Notas
+    Definir i Como Entero
+    
+    Escribir ""
+    Escribir "================================================"
+    Escribir "   CONSULTA DE NOTAS"
+    Escribir "================================================"
+    Escribir ""
+    
+    Escribir "Ingrese la cédula del estudiante: "
+    Leer cedula
+    
+    estudiante = ObtenerEstudiante(cedula)
+    
+    Si estudiante = Nulo Entonces
+        Escribir "❌ Estudiante no encontrado."
+    Sino
+        notasEncontradas = ObtenerNotasEstudiante(cedula)
+        
+        Si Longitud(notasEncontradas) = 0 Entonces
+            Escribir "No hay notas registradas para este estudiante."
+        Sino
+            Escribir ""
+            Escribir "📊 NOTAS DE ", estudiante.nombre, ":"
+            Escribir "--------------------------------------------------"
+            
+            Para i = 0 Hasta Longitud(notasEncontradas) - 1 Hacer
+                Escribir ""
+                Escribir "Asignatura: ", notasEncontradas[i].asignatura
+                Escribir "Primer Parcial: ", notasEncontradas[i].parcial1
+                Escribir "Segundo Parcial: ", notasEncontradas[i].parcial2
+                Escribir "Examen Final: ", notasEncontradas[i].examen
+                
+                Escribir "Promedio: ", CalcularPromedioNota(notasEncontradas[i])
+                Escribir "Estado: ", DeterminarEstado(CalcularPromedioNota(notasEncontradas[i]))
+                Escribir ""
+            Fin Para
+        Fin Si
+    Fin Si
+Fin SubAlgoritmo
+
+// ============================================================
+// FUNCIONES AUXILIARES PARA NOTAS
+// ============================================================
+
+// ------------------ Obtener Notas de Estudiante --------------------
+Función ObtenerNotasEstudiante(cedula) Retorna Arreglo de Notas
+    Definir i Como Entero
+    Definir resultado Como Arreglo de Notas
+    resultado = []
+    
+    Para i = 0 Hasta Longitud(listaNotas) - 1 Hacer
+        Si listaNotas[i].cedula = cedula Entonces
+            Agregar listaNotas[i] a resultado
+        Fin Si
+    Fin Para
+    
+    Retornar resultado
+Fin Función
+
+// ------------------ Calcular Promedio de Nota --------------------
+Función CalcularPromedioNota(notas) Retorna Real
+    // 30% primer parcial, 30% segundo parcial, 40% examen final
+    Definir promedio Como Real
+    promedio = (notas.parcial1 * 0.3) + (notas.parcial2 * 0.3) + (notas.examen * 0.4)
+    Retornar promedio
+Fin Función
+
+// ------------------ Determinar Estado --------------------
+Función DeterminarEstado(promedio) Retorna Cadena
+    Si promedio >= 14 Entonces
+        Retornar "Aprobado"
+    Sino Si promedio >= 10 Entonces
+        Retornar "Suspenso"
+    Sino
+        Retornar "Reprobado"
+    Fin Si
+Fin Función
+
+// ============================================================
+// CÁLCULO Y REPORTES
+// ============================================================
+
+// ------------------ Calcular Promedios Generales --------------------
+SubAlgoritmo CalcularPromedios()
+    Definir i Como Entero
+    Definir estudiante Como Estudiante
+    Definir notasEstudiante Como Arreglo de Notas
+    Definir promedioGeneral Como Real
+    Definir sumaPromedios Como Real
+    Definir estado Como Cadena
+    
+    Escribir ""
+    Escribir "================================================"
+    Escribir "   CÁLCULO DE PROMEDIOS GENERALES"
+    Escribir "================================================"
+    Escribir ""
+    
+    Si Longitud(listaEstudiantes) = 0 Entonces
+        Escribir "No hay estudiantes registrados."
+    Sino
+        Escribir "Cédula     | Estudiante           | Promedio | Estado"
+        Escribir "--------------------------------------------------------"
+        
+        Para i = 0 Hasta Longitud(listaEstudiantes) - 1 Hacer
+            estudiante = listaEstudiantes[i]
+            notasEstudiante = ObtenerNotasEstudiante(estudiante.cedula)
+            
+            Si Longitud(notasEstudiante) > 0 Entonces
+                sumaPromedios = 0
+                Para j = 0 Hasta Longitud(notasEstudiante) - 1 Hacer
+                    sumaPromedios = sumaPromedios + CalcularPromedioNota(notasEstudiante[j])
+                Fin Para
+                promedioGeneral = sumaPromedios / Longitud(notasEstudiante)
+            Sino
+                promedioGeneral = 0
+            Fin Si
+            
+            estado = DeterminarEstado(promedioGeneral)
+            Escribir estudiante.cedula, " | ", estudiante.nombre, " | ", 
+                     promedioGeneral, " | ", estado
+        Fin Para
+    Fin Si
+Fin SubAlgoritmo
+
+// ------------------ Generar Reporte General --------------------
+SubAlgoritmo GenerarReporte()
+    Definir i Como Entero
+    Definir estudiante Como Estudiante
+    Definir notasEstudiante Como Arreglo de Notas
+    Definir promedioGeneral Como Real
+    Definir sumaPromedios Como Real
+    Definir aprobados, suspensos, reprobados Como Entero
+    Definir estado Como Cadena
+    
+    aprobados = 0
+    suspensos = 0
+    reprobados = 0
+    
+    Escribir ""
+    Escribir "================================================"
+    Escribir "   REPORTE GENERAL DEL SISTEMA"
+    Escribir "================================================"
+    Escribir ""
+    
+    Escribir "📊 ESTADÍSTICAS:"
+    Escribir "Total de estudiantes: ", Longitud(listaEstudiantes)
+    Escribir ""
+    
+    Si Longitud(listaEstudiantes) > 0 Entonces
+        Escribir "DETALLE DE ESTUDIANTES:"
+        Escribir "----------------------------------------"
+        
+        Para i = 0 Hasta Longitud(listaEstudiantes) - 1 Hacer
+            estudiante = listaEstudiantes[i]
+            notasEstudiante = ObtenerNotasEstudiante(estudiante.cedula)
+            
+            Si Longitud(notasEstudiante) > 0 Entonces
+                sumaPromedios = 0
+                Para j = 0 Hasta Longitud(notasEstudiante) - 1 Hacer
+                    sumaPromedios = sumaPromedios + CalcularPromedioNota(notasEstudiante[j])
+                Fin Para
+                promedioGeneral = sumaPromedios / Longitud(notasEstudiante)
+            Sino
+                promedioGeneral = 0
+            Fin Si
+            
+            estado = DeterminarEstado(promedioGeneral)
+            
+            Si estado = "Aprobado" Entonces
+                aprobados = aprobados + 1
+            Sino Si estado = "Suspenso" Entonces
+                suspensos = suspensos + 1
+            Sino
+                reprobados = reprobados + 1
+            Fin Si
+            
+            Escribir "Estudiante: ", estudiante.nombre
+            Escribir "Promedio: ", promedioGeneral
+            Escribir "Estado: ", estado
+            Escribir "----------------------------------------"
+        Fin Para
+        
+        Escribir ""
+        Escribir "RESUMEN:"
+        Escribir "✅ Aprobados: ", aprobados
+        Escribir "⚠️ Suspensos: ", suspensos
+        Escribir "❌ Reprobados: ", reprobados
+        
+        // Calcular porcentajes
+        Si Longitud(listaEstudiantes) > 0 Entonces
+            Escribir ""
+            Escribir "PORCENTAJES:"
+            Escribir "Aprobados: ", (aprobados / Longitud(listaEstudiantes)) * 100, "%"
+            Escribir "Suspensos: ", (suspensos / Longitud(listaEstudiantes)) * 100, "%"
+            Escribir "Reprobados: ", (reprobados / Longitud(listaEstudiantes)) * 100, "%"
+        Fin Si
+    Sino
+        Escribir "No hay datos para generar el reporte."
+    Fin Si
+Fin SubAlgoritmo
+
+// ============================================================
+// FUNCIONES DE UTILIDAD
+// ============================================================
+
+// ------------------ Limpiar Pantalla --------------------
+SubAlgoritmo LimpiarPantalla()
+    // Depende del sistema operativo
+    // En Windows: cls
+    // En Linux/Mac: clear
+    // Se implementa según el sistema
+Fin SubAlgoritmo
